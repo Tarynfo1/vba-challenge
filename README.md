@@ -1,5 +1,8 @@
 # vba-challenge
 Module 2 assignment
+
+This is the first time I have ever used VBA so I relied on many resources, including how to format acknowledgements on github. I was unable to complete the Bonus question on this assignment due to my beginner level of VBA.
+
 ## Acknowledgements
 
 The code implementation for sending output to separate worksheet was assisted by AskBCS LA, Richie Garafola. The provided code snippet helped in sending output to a separate worksheet.
