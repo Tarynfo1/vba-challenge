@@ -1,11 +1,10 @@
 Sub Multiple_year_stock_data()
-
 'Declare the worksheet variables
     Dim ws As Worksheet
     Dim outputWs As Worksheet
     
 'Assign the worksheets to the variables
-    Set ws = ThisWorkbook.Worksheets("A")
+    Set ws = ThisWorkbook.Worksheets("2018")
     Set outputWs = ThisWorkbook.Worksheets.Add
     
 'Set the last row of the worksheet
@@ -98,8 +97,6 @@ Sub Multiple_year_stock_data()
         
      
     Next i
-   
 
-   
 
 End Sub
