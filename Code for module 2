@@ -1,0 +1,102 @@
+Sub Multiple_year_stock_data()
+'Declare the worksheet variables
+    Dim ws As Worksheet
+    Dim outputWs As Worksheet
+    
+'Assign the worksheets to the variables
+    Set ws = ThisWorkbook.Worksheets("2018")
+    Set outputWs = ThisWorkbook.Worksheets.Add
+    
+'Set the last row of the worksheet
+    Dim Lastrow As Long
+    Dim i As Long
+    Dim j As Integer
+    j = 0
+    
+'Find the last row
+    Lastrow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+    
+'Create arrays for variables and assign values to columns to create headings
+    
+    outputWs.Range("I1").Value = "Ticker"
+    outputWs.Range("J1").Value = "Yearly Change"
+    outputWs.Range("K1").Value = "Percent Change"
+    outputWs.Range("L1").Value = "Total Stock Volume"
+
+'Declare the new variables for the Yearly change and percent change
+    Dim open_price As Double
+    Dim close_price As Double
+    Dim Yearly_Change As Double
+    Dim Price_Change_Percent As Double
+    
+'Set the parameters of the For Loop
+    Dim outputRow As Long
+    
+'Variable for output row counter
+    outputRow = 2
+    
+'Start populating output from row 2
+    Dim tickerRow As Long
+    
+'Variable for ticker row counter
+    tickerRow = 2
+    
+'Start populating tickers from row 2
+    For i = 2 To Lastrow
+    
+'Populate the ticker column using the conditionals
+        If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+            
+'Assign the values from the current row
+            open_price = ws.Cells(i, 3).Value
+            close_price = ws.Cells(i, 6).Value
+            
+'Calculate the Yearly Change and Percentage Change
+            Yearly_Change = close_price - open_price
+            If open_price <> 0 Then
+                Price_Change_Percent = (Yearly_Change / open_price) * 100
+            Else
+                Price_Change_Percent = 0
+            End If
+            
+'Populate the respective columns with the calculated values in the output worksheet
+            outputWs.Cells(outputRow, "I").Value = ws.Cells(i, 1).Value
+            outputWs.Cells(outputRow, "J").Value = Yearly_Change
+            outputWs.Cells(outputRow, "K").Value = Price_Change_Percent
+            outputWs.Cells(outputRow, "L").Value = WorksheetFunction.Sum(ws.Range(ws.Cells(2, 7), ws.Cells(i, 7)))
+        
+
+            
+ 'Apply colour conditions to variables
+            Select Case Yearly_Change
+                Case Is > 0
+                    outputWs.Cells(outputRow, "J").Interior.ColorIndex = 4
+                Case Is < 0
+                    outputWs.Cells(outputRow, "J").Interior.ColorIndex = 3
+                Case Else
+                    outputWs.Cells(outputRow, "J").Interior.ColorIndex = 0
+            End Select
+            
+ 'colors positives green and negatives red
+            Select Case Price_Change_Percent
+                Case Is > 0
+                    outputWs.Cells(outputRow, "K").Interior.ColorIndex = 4
+                Case Is < 0
+                    outputWs.Cells(outputRow, "K").Interior.ColorIndex = 3
+                Case Else
+                    outputWs.Cells(outputRow, "K").Interior.ColorIndex = 0
+                    
+        
+            End Select
+
+'Increment the output row counter
+            outputRow = outputRow + 1
+            
+        End If
+        
+        
+     
+    Next i
+
+
+End Sub
