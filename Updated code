@@ -1,0 +1,107 @@
+Sub Multiple_year_stock_data()
+
+'Declare the worksheet variable
+    Dim ws As Worksheet
+
+'Add loop to run for each sheet
+For Each ws In Worksheets
+
+'Set the paramters of the sheets and declare last row
+    Dim Lastrow As Long
+    Dim i As Long
+    Dim j As Integer
+    j = 0
+    
+'Find the last row
+    Lastrow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+    
+'Create arrays for variables and assign values to columns to create headings
+    ws.Range("I1").Value = "Ticker"
+    ws.Range("J1").Value = "Yearly Change"
+    ws.Range("K1").Value = "Percent Change"
+    ws.Range("L1").Value = "Total Stock Volume"
+    
+'Declare the new variables for the Yearly change and Percent change
+    Dim open_price As Double
+    Dim close_price As Double
+    Dim Yearly_Change As Double
+    Dim Price_Change_Percent As Double
+    Dim Total_Volume As Double
+    
+'Set the parameters of the For Loop
+    Dim outputRow As Long
+    
+'Set the output row counters and the total volume counter
+    outputRow = 2
+    Total_Volume = 0
+    
+'Start populating output from row 2
+    Dim tickerRow As Long
+    
+'Variable for ticker row counter
+    tickerRow = 2
+    
+'Start populating tickers from row 2
+    For i = 2 To Lastrow
+    
+'Calculate the total volume
+    
+    Total_Volume = Total_Volume + ws.Cells(i, 7).Value
+    
+'Populate the ticker column using the conditionals
+
+        If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+        
+'Assign the values from the current row
+            open_price = ws.Cells(i, 3).Value
+            close_price = ws.Cells(i, 6).Value
+            
+'Calculate the Yearly Change and Percentage Change
+
+            Yearly_Change = close_price - open_price
+            If open_price <> 0 Then
+                Price_Change_Percent = (Yearly_Change / open_price) * 100
+            Else
+                Price_Change_Percent = 0
+            End If
+            
+'Populate the respective columns with the calculated values in the output worksheet
+
+            ws.Cells(outputRow, "I").Value = ws.Cells(i, 1).Value
+            ws.Cells(outputRow, "J").Value = Yearly_Change
+            ws.Cells(outputRow, "K").Value = Price_Change_Percent
+            ws.Cells(outputRow, "L").Value = Total_Volume
+            Total_Volume = 0
+            
+ 'Apply conditional formatting colours to variables
+
+            Select Case Yearly_Change
+                Case Is > 0
+                    ws.Cells(outputRow, "J").Interior.ColorIndex = 4
+                Case Is < 0
+                    ws.Cells(outputRow, "J").Interior.ColorIndex = 3
+                Case Else
+                    ws.Cells(outputRow, "J").Interior.ColorIndex = 0
+            End Select
+            
+ 'Colour positives green and negatives red
+ 
+            Select Case Price_Change_Percent
+                Case Is > 0
+                    ws.Cells(outputRow, "K").Interior.ColorIndex = 4
+                Case Is < 0
+                    ws.Cells(outputRow, "K").Interior.ColorIndex = 3
+                Case Else
+                    ws.Cells(outputRow, "K").Interior.ColorIndex = 0
+            End Select
+            
+'Increment the output row counter
+
+            outputRow = outputRow + 1
+            
+        End If
+    Next i
+    
+Next
+    
+End Sub
