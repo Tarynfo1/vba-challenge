@@ -1,3 +1,5 @@
+# Update eff. 6/18/2023 Have updated the code to read through all worksheets and updated screenshots to show evidence of code running across all sheets in the workbook. Look forward to the feedback!
+
 # vba-challenge
 Module 2 assignment
 
@@ -89,3 +91,17 @@ The code implementation for colour conditions was assisted by TA Imaad Fakier. T
 ' ...
 
 'The insights and code helped enhance the functionality and efficiency of the assignment. 
+
+The code implementation for calculating the total volume was assisted by AskBCS LA, Robert Perron. The provided code snippet helped in sending output to a separate worksheet.
+
+### Code Snippet
+
+``
+' ...
+
+'Total_Volume = Total_Volume + ws.Cells(i, 7).Value
+
+' ...
+
+
+The insights and code helped enhance the functionality and efficiency of the assignment. 
